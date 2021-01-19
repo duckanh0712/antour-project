@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+
 
 class EmployeeController extends Controller
 {
@@ -14,7 +17,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::select('name','image','state','role','created_at')->latest()->paginate(20);
+        $employees = Employee::select('id','name','image','state','role','created_at')->latest()->paginate(20);
 
         return view('admin.employees.index',[ 'data' => $employees]);
 
@@ -118,7 +121,9 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee = Employee::findorFail($id);
+
+        return  view('admin.employees.profile',[ 'data' => $employee ]);
     }
 
     /**
@@ -131,6 +136,26 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+    public function change(Request $request, $id)
+    {
+
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+            $state = $request->state;
+        //Thực hiện câu lệnh update với các giá trị $request trả về
+        $updateData = DB::table('employees')->where('id', $id)->update([
+            'state' => (!$state),
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        if ($updateData) {
+            Session::flash('success', 'Thay đổi trạng thái thành công!');
+            return redirect()->route('admin.employee.show',['employee' => $id]);
+        }else {
+            Session::flash('error', 'Thay đổi trạng thái thất bại!');
+        }
+
+
     }
 
     /**

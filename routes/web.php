@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/admin', 'AdminController@index')->name('dashboard');
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::get('/admin/login', 'AdminController@login')->name('admin.login');
+Route::post('/admin', 'AdminController@postLogin')->name('admin.postLogin');
+Route::group(['prefix' => 'admin', 'as' => 'admin.', ], function () {
     Route::resource('employee', 'EmployeeController');
+    Route::post('employee/{id}', 'EmployeeController@change')->name('employee.change');
 });

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Employee;
 
 class AdminController extends Controller
 {
@@ -21,64 +23,35 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function login()
     {
-        //
+        return view('auth.login');
+    }
+    public function postLogin(Request $request)
+    {
+        //validate du lieu
+//        $request->validate([
+//            'email' => 'required|string|email|max:255',
+//            'password' => 'required|string|min:6'
+//        ]);
+
+        $data = [
+            'username' => $request->username,
+            'password' => $request->password
+        ];
+
+        if (Auth::guard('employee')->attempt($data)) {
+
+            return redirect()->route('admin.dashboard');
+
+        } else {
+
+            return redirect()->back()->with('msg', 'Tên đăng nhập hoặc mật khẩu không chính xác');
+        }
+
+
+
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
