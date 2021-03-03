@@ -16,10 +16,20 @@ class CheckAuth
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check()){
-            return $next($request);
+        if (Auth::check() ){
+            if (Auth::user()->role !== 'GUEST'  ){
+                return $next($request);
+
+            }else{
+
+                return redirect()->route('client.home');
+            }
+
+
+        }else{
+
+            return redirect()->route('admin.login');
         }
-        return redirect()->route('admin.login');
 
     }
 }

@@ -71,6 +71,9 @@
                             <td class="project-actions text-right">
                                 <a class="btn btn-success fas fa-eye" href="{{ route('admin.employee.show', ['employee' => $item->id]) }}">
                                 </a>
+{{--                                <a href="{{ route('admin.employee.edit', ['id'=> $item->id]) }}" class="btn btn-primary btn-info">--}}
+{{--                                    <i class="fa fa-edit"></i>--}}
+{{--                                </a>--}}
 
                             </td>
                         </tr>

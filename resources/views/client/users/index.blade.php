@@ -12,8 +12,15 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <h3 class="card-title">Quản lý khách hàng</h3>
+                        <a class="btn btn-info btn-sm" href="{{ route('user.create') }}">
+                            <i class="nav-icon ion-person-add">
+                            </i>
+                            Thêm
+                        </a>
                     </div>
+
                 </div>
+
                 <div class="card-body p-0">
                     <table class="table table-striped projects">
                         <thead>
@@ -60,9 +67,15 @@
                                     <span class="">{{ $item->username }}</span>
                                 </td>
                                 <td class="project-actions text-right">
-                                    <a class="btn btn-success fas fa-eye" href="{{ route('user.show', ['user' => $item->id]) }}">
+                                    <a class="btn btn-success btn-sm" href="{{ route('user.show', ['user' => $item->id]) }}">
+                                        <i class="fas fa-eye">
+                                        </i>
                                     </a>
 
+                                    <a class="btn btn-info btn-sm" href="{{ route('user.edit', ['id'=> $item->id]) }}">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

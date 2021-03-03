@@ -29,29 +29,45 @@ class AdminController extends Controller
     }
     public function postLogin(Request $request)
     {
-        //validate du lieu
-//        $request->validate([
-//            'email' => 'required|string|email|max:255',
-//            'password' => 'required|string|min:6'
-//        ]);
+//        validate du lieu
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required|min:6'
+        ],[
+            'username.required' => 'Chưa nhập tên đăng nhập',
+
+            'password.required' => 'Chưa nhập mật khẩu',
+            'password.min' => 'mật khẩu tối thiểu 6 ký tự'
+        ]);
 
         $data = [
-            'username' => $request->username,
-            'password' => $request->password
+            'username' => $request->input('username'),
+            'password' => $request->input('password')
         ];
 
-        if (Auth::guard('employee')->attempt($data)) {
+        // check success
+        if (Auth::attempt($data)) {
 
-            return redirect()->route('admin.dashboard');
+            if (Auth::user()->state == 0){
+                return redirect()->route('admin.login')->with('erorr' , 'tài khoản đã bị khóa hãy liên lạc với bạn quản trị để giải quyết');
+            }
+            if (Auth::user()->role != 'GUEST') {
+                return redirect()->route('dashboard');
+            }else{
+                return redirect()->route('client.home');
+            }
 
-        } else {
-
-            return redirect()->back()->with('msg', 'Tên đăng nhập hoặc mật khẩu không chính xác');
+        }
+        else {
+            return redirect()->back()->with('error', 'Tên đăng nhập  hoặc mật khẩu không chính xác');
         }
 
+    }
 
-
-
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('admin.login');
     }
 
 }
