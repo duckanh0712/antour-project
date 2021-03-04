@@ -31,7 +31,7 @@
                     <th>Tên </th>
                     <th>Ảnh</th>
                     <th>địa chỉ</th>
-                    <th>Mô tả</th>
+{{--                    <th>Mô tả</th>--}}
                     <th>thành viên</th>
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
@@ -52,7 +52,7 @@
                         </td>
 
                         <td>{{ $item->address }}</td>
-                        <td>{{ $item->description  }}</td>
+{{--                        <td>{{ $item->description  }}</td>--}}
                         <td>{{ $item->max_members  }}</td>
                         <td>{{ $item->start_date  }}</td>
                         <td>{{ $item->end_date  }}</td>

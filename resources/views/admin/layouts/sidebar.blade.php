@@ -11,10 +11,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="/backend/dist/img/user1-128x128.jpg" class="img-circle elevation-2" alt="User Image">
+{{--                <img src="{{asset(Auth::user()->image) ? asset(Auth::user()->image) : ''}}" class="img-circle elevation-2" alt="User Image">--}}
             </div>
             <div class="info">
-                <a href="#" class="d-block">Khuất Đức Khánh</a>
+{{--                <a href="#" class="d-block">{{ Auth::user()->name ? Auth::user()->name : 'menber'}}</a>--}}
             </div>
         </div>
 
@@ -39,9 +39,25 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.tour.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-barcode"></i>
+                        <i class="nav-icon fas fa-image"></i>
                         <p>
                             Quản lý tour
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.tour.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-inbox"></i>
+                        <p>
+                            Quản lý đặt tour
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.tour.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-barcode"></i>
+                        <p>
+                            Thống kê
                         </p>
                     </a>
                 </li>

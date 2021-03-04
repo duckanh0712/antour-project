@@ -153,14 +153,20 @@ class EmployeeController extends Controller
     {
 
         date_default_timezone_set("Asia/Ho_Chi_Minh");
-            $state = $request->state;
-        //Thực hiện câu lệnh update với các giá trị $request trả về
-        $updateData = DB::table('employees')->where('id', $id)->update([
-            'state' => (!$state),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
+        $state = $request->state;
+        if ($state == 0 )
+        {
+            $state = 1;
+        }
+        else{
+            $state = 0;
+        }
 
-        if ($updateData) {
+        $employee = Employee::findorFail($id);
+        $employee->state = $state;
+        $employee->save();
+
+        if ($employee->save()) {
             Session::flash('success', 'Thay đổi trạng thái thành công!');
             return redirect()->route('admin.employee.show',['employee' => $id]);
         }else {

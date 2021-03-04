@@ -5,13 +5,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Thêm nhân viên</h1>
+                    <h1>Thêm Tour</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Quản Lý Antour</a></li>
-                        <li class="breadcrumb-item"><a href="#">Quản lý nhân viên</a></li>
-                        <li class="breadcrumb-item active">Thêm nhân viên</li>
+                        <li class="breadcrumb-item"><a href="#">Quản lý tour</a></li>
+                        <li class="breadcrumb-item active">Thêm tour</li>
                     </ol>
                 </div>
             </div>
@@ -45,12 +45,12 @@
                             <input type="text" id="address" name="address" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="name">số thành viên</label>
-                            <input type="hidden" id="max_members" name="max_members" class="form-control" value="0">
+                            <label for="name">Tổng thành viên</label>
+                            <input type="number" id="max_members" name="max_members" class="form-control" value="0">
                         </div>
                         <div class="form-group">
                             <label for="phone">Mô tả</label>
-                            <input type="text" id="description" name="description" class="form-control">
+                            <textarea type="text" id="description" name="description" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="inputName">Bắt đầu</label>
@@ -67,7 +67,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <input type="reset" class="btn btn-default pull-right" value="Reset">
+
                 <button type="submit" class="btn btn-primary">Tạo</button>
             </div>
         </div>

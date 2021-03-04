@@ -16,9 +16,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::select('id','name','email','phone','username','created_at')->latest()->paginate(20);
+        $users  = User::where('role','guest')->latest()->paginate(20);
 
-        return view('client.users.index',[ 'data' => $users]);
+        return view('admin.users.index',[ 'data' => $users]);
     }
     public function login()
     {
@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('client.users.register');
+        return view('admin.users.create');
 
     }
 
@@ -50,7 +50,7 @@ class UserController extends Controller
 
         if ($updateData) {
             Session::flash('success', 'Thay đổi trạng thái thành công!');
-            return redirect()->route('user.show',['user' => $id]);
+            return redirect()->route('admin.user.show',['user' => $id]);
         }else {
             Session::flash('error', 'Thay đổi trạng thái thất bại!');
         }
@@ -93,12 +93,13 @@ class UserController extends Controller
         $user->username = $request->username;
         $user->password = bcrypt($request->password);
         $user->sex = $request->sex;
+        $user->role =$request->role;
         $user->birthday = $request->birthday;
         $user->created_at = date('Y-m-d H:i:s');
         $user->updated_at = date('Y-m-d H:i:s');
         $user->save();
 
-        return redirect()->route('user.login');
+        return redirect()->route('admin.user.index');
 
 
     }
@@ -115,6 +116,8 @@ class UserController extends Controller
 
         return  view('client.users.profile',[ 'data' => $user ]);
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -171,6 +174,8 @@ class UserController extends Controller
         }
 
     }
+
+
 
     /**
      * Remove the specified resource from storage.

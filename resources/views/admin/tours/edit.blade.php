@@ -35,7 +35,9 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Ảnh</label>
+                            <img src="{{asset($data->image)}}" alt="" width="10%" class="m-1">
                             <div class="custom-file">
+
                                 <input type="file" class="custom-file-input" name="image" id="image">
                                 <label class="custom-file-label" for="image">Chọn ảnh đại diện</label>
                             </div>
