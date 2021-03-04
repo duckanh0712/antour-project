@@ -16,7 +16,7 @@
                     {{ Session::get('success') }}
                 </div>
             @endif
-            <h3 class="card-title">Danh sách nhân viên</h3>
+            <h3 class="card-title">Danh sách tour</h3>
 
             <div class="card-tools">
                 <a href="{{ route('admin.tour.create') }}" class="btn btn-primary fas">Thêm mới</a>
@@ -30,9 +30,10 @@
                     <th>STT</th>
                     <th>Tên </th>
                     <th>Ảnh</th>
-                    <th>địa chỉ</th>
+                    <th>Giá</th>
+                    <th>Thành viên đăng ký</th>
 {{--                    <th>Mô tả</th>--}}
-                    <th>thành viên</th>
+
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
                 </tr>
@@ -44,18 +45,14 @@
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $item->name }}</td>
                         <td>
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <img alt="Avatar" class="table-avatar" src="{{asset($item->image)}}" style="width: 150px">
-                                </li>
-                            </ul>
+                            <img alt="Avatar" class="table-avatar" src="{{asset($item->image)}}" style="width: 150px">
                         </td>
-
-                        <td>{{ $item->address }}</td>
+                        <td>{{ number_format($item->price,0,",",".").' đ' }}</td>
+                        <td>{{ $item->members.'/'.$item->max_members }}</td>
 {{--                        <td>{{ $item->description  }}</td>--}}
-                        <td>{{ $item->max_members  }}</td>
-                        <td>{{ $item->start_date  }}</td>
-                        <td>{{ $item->end_date  }}</td>
+
+                        <td>{{ date('d-m-Y', strtotime($item->start_date))  }}</td>
+                        <td>{{ date('d-m-Y', strtotime($item->end_date))  }}</td>
                         <td>
                             <a href="{{ route('admin.tour.edit', ['id'=> $item->id]) }}" class="btn btn-primary fas fa-edit"> Sửa</a>
 {{--                            <a href="javascript:void(0)" onclick="destroy( {{$item->id}},'tour')" class="btn btn-danger "> Xóa</a>--}}

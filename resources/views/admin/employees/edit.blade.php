@@ -58,6 +58,7 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Ảnh</label>
+                            <img src="{{asset($data->image)}}" alt="" width="10%" class="m-1">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="image" id="image">
                                 <label class="custom-file-label" for="image">Chọn ảnh đại diện</label>
@@ -72,38 +73,38 @@
                 </div>
                 <!-- /.card -->
             </div>
-            <div class="col-md-6">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Tài khoản</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="username">Tên đăng nhập</label>
-                            <input type="text" id="username" name="username" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Mật khẩu</label>
-                            <input type="password" id="password" name="password" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="role">Quyền</label>
-                            <select id="role" name="role" class="form-control custom-select">
-                                <option selected disabled>Chọn quyền</option>
-                                <option value="employee">Nhân Viên</option>
-                                <option value="manager">Quản Lý</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-            </div>
+{{--            <div class="col-md-6">--}}
+{{--                <div class="card card-primary">--}}
+{{--                    <div class="card-header">--}}
+{{--                        <h3 class="card-title">Tài khoản</h3>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="username">Tên đăng nhập</label>--}}
+{{--                            <input type="text" id="username" name="username" class="form-control">--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="password">Mật khẩu</label>--}}
+{{--                            <input type="password" id="password" name="password" class="form-control">--}}
+{{--                        </div>--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="role">Quyền</label>--}}
+{{--                            <select id="role" name="role" class="form-control custom-select">--}}
+{{--                                <option selected disabled>Chọn quyền</option>--}}
+{{--                                <option value="employee">Nhân Viên</option>--}}
+{{--                                <option value="manager">Quản Lý</option>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <!-- /.card-body -->--}}
+{{--                </div>--}}
+{{--                <!-- /.card -->--}}
+{{--            </div>--}}
         </div>
         <div class="row">
             <div class="col-12">
-                <input type="reset" class="btn btn-default pull-right" value="Reset">
-                <button type="submit" class="btn btn-primary">Tạo</button>
+
+                <button type="submit" class="btn btn-primary">Lưu</button>
             </div>
         </div>
     </form>

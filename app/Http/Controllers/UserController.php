@@ -93,13 +93,20 @@ class UserController extends Controller
         $user->username = $request->username;
         $user->password = bcrypt($request->password);
         $user->sex = $request->sex;
-        $user->role =$request->role;
+        $user->role = 'guest';
         $user->birthday = $request->birthday;
         $user->created_at = date('Y-m-d H:i:s');
         $user->updated_at = date('Y-m-d H:i:s');
+
         $user->save();
 
-        return redirect()->route('admin.user.index');
+        if ( $user->save()) {
+            Session::flash('success', 'Đăng kí tài khoản "'.$user->username.'" thành công');
+            return redirect()->route('admin.login');
+        }else {
+            Session::flash('error', ' Đăng ký thất bại!');
+            return redirect()->route('register');
+        }
 
 
     }

@@ -17,7 +17,8 @@ class CheckAuth
     public function handle($request, Closure $next)
     {
         if (Auth::check() ){
-            if (Auth::user()->role !== 'GUEST'  ){
+            if (Auth::user()->role != 'guest'  ){
+
                 return $next($request);
 
             }else{

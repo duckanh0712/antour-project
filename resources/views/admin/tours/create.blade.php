@@ -46,11 +46,15 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Tổng thành viên</label>
-                            <input type="number" id="max_members" name="max_members" class="form-control" value="0">
+                            <input type="number" id="max_members" name="max_members" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="phone">Mô tả</label>
                             <textarea type="text" id="description" name="description" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Giá</label>
+                            <input type="number" id="price" name="price" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="inputName">Bắt đầu</label>

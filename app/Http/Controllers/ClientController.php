@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Tour;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -13,9 +15,19 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $tours = Tour::latest()->paginate(20);
+        return  view('client.home', [ 'tours' => $tours]);
     }
 
+    public function detail ($id)
+    {
+        $tour = Tour::findorFail($id);
+//        $start_date = new Carbon($tour->start_date);
+//        $end_date = new Carbon($tour->end_date);
+//        $tour->start_date = $start_date;
+//        $tour->end_date = $end_date;
+        return view('client.tour_detail', [ 'tour' => $tour ]);
+    }
     public function registerForm ()
     {
         return view('auth.register');

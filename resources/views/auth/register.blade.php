@@ -18,15 +18,15 @@
 <div class="register-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="/backend/index2.html" class="h1"><b>An</b>Tour</a>
+            <a href="/" class="h1"><b>An</b>Tour</a>
         </div>
         <div class="card-body">
             <p class="login-box-msg">Đăng ký thành viên mới</p>
 
-            <form action="{{ route('user.store') }}" method="post">
+            <form action="{{route('post.register')}}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Họ và tên">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Họ và tên" value="{{old('name')}}" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Tên đăng nhập">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Tên đăng nhập" value="{{old('username')}}" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{old('email')}}" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="number" class="form-control" name="phone" id="phone" placeholder="SDT">
+                    <input type="number" class="form-control" name="phone" id="phone" placeholder="SDT" value="{{old('phone')}}" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-phone"></span>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Mật Khẩu">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Mật Khẩu" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" name="repassword" id="repassword" placeholder="Nhập lại mật khẩu">
+                    <input type="password" class="form-control" name="repassword" id="repassword" placeholder="Nhập lại mật khẩu" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>

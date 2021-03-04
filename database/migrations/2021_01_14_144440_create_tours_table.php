@@ -18,6 +18,7 @@ class CreateToursTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->string('address');
+            $table->bigInteger('price');
             $table->string('description');
             $table->integer('members')->nullable();
             $table->integer('max_members');

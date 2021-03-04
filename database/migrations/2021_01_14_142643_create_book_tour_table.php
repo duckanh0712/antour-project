@@ -20,7 +20,7 @@ class CreateBookTourTable extends Migration
             $table->integer('user_id');
             $table->integer('members');
             $table->integer('total_price');
-            $table->string('state');
+            $table->integer('state');
             $table->timestamps();
         });
     }

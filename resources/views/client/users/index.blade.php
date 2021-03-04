@@ -1,94 +1,60 @@
 @extends('admin.layouts.main')
-@section('title','Quản lý Antour')
+@section('title','Quản lý khách ')
 @section('content')
-    <div class="card card-primary">
-        <!-- /.card-header -->
-
-        <!-- form start -->
-        <section class="content">
-
-            <!-- Default box -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Quản lý khách hàng</h3>
-                        <a class="btn btn-info btn-sm" href="{{ route('user.create') }}">
-                            <i class="nav-icon ion-person-add">
-                            </i>
-                            Thêm
-                        </a>
+    <div class="card">
+        <div class="card-header">
+                @if ( Session::has('error') )
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-check"></i> Thông báo</h5>
+                        {{ Session::get('error') }}
                     </div>
+                @elseif( Session::has('success') )
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-check"></i> Thông báo </h5>
+                        {{ Session::get('success') }}
+                    </div>
+                @endif
+            <h3 class="card-title">Danh sách khách hàng</h3>
 
-                </div>
-
-                <div class="card-body p-0">
-                    <table class="table table-striped projects">
-                        <thead>
-                        <tr>
-                            <th style="width: 1%">
-                                STT
-                            </th>
-                            <th style="width: 20%">
-                                Họ và Tên
-                            </th>
-                            <th style="width: 30%">
-                                email
-                            </th>
-                            <th>
-                                SĐT
-                            </th>
-                            <th>
-                                Tên đăng nhập
-                            </th>
-                            <th style="width: 20%">
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($data as $key => $item)
-                            <tr class="item-{{ $item->id }}"> <!-- Thêm Class Cho Dòng -->
-                                <td>{{ ($key + 1) }}</td>
-                                <td>
-                                    <a>
-                                        {{$item->name}}
-                                    </a>
-                                    <br/>
-                                    <small>
-                                        {{'Đã tạo: '.$item->created_at}}
-                                    </small>
-                                </td>
-                                <td class="project_progress">
-                                    <span class="">{{ $item->email }}</span>
-                                </td>
-                                <td class="project_progress">
-                                    <span class="">{{ $item->phone }}</span>
-                                </td>
-                                <td class="project_progress">
-                                    <span class="">{{ $item->username }}</span>
-                                </td>
-                                <td class="project-actions text-right">
-                                    <a class="btn btn-success btn-sm" href="{{ route('user.show', ['user' => $item->id]) }}">
-                                        <i class="fas fa-eye">
-                                        </i>
-                                    </a>
-
-                                    <a class="btn btn-info btn-sm" href="{{ route('user.edit', ['id'=> $item->id]) }}">
-                                        <i class="fas fa-pencil-alt">
-                                        </i>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    {{ $data->links() }}
-                </div>
-                <!-- /.card-body -->
+            <div class="card-tools">
+                <a href="{{route('admin.user.create')}}" class="btn btn-primary fas">Thêm mới</a>
             </div>
-            <!-- /.card -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Họ và Tên</th>
+                    <th>Ngày sinh</th>
+                    <th>SĐT</th>
+                    <th>Email</th>
+                    <th>Giới tính</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach( $data as $key => $item)
+                <tr id="{{'tr-'.$item->id}}">
 
-        </section>
-        <!-- /.content -->
+                    <td>{{ $key + 1 }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->birthday }}</td>
+                    <td>{{ $item->phone }}</td>
+                    <td>{{ $item->email }}</td>
+                    <td>{{ $item->sex }}</td>
+                    <td>
+                        <a href="{{ route('admin.user.edit', ['id'=> $item->id]) }}" class="btn btn-primary fas fa-edit"> Sửa</a>
+{{--                        <a href="javascript:void(0)" onclick="destroy( {{$item->id, 'user'}})" class="btn btn-danger"> Xóa</a>--}}
+                    </td>
+                </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
     </div>
 @endsection
-

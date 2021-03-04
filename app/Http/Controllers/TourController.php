@@ -41,6 +41,8 @@ class TourController extends Controller
         $tour = new Tour();
         $tour->name = $request->name;
         $tour->address = $request->address;
+        $tour->members = 0;
+        $tour->price = $request->price;
         $tour->max_members = $request->max_members;
         $tour->description = $request->description;
         $tour->start_date = $request->start_date;

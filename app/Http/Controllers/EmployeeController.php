@@ -32,6 +32,10 @@ class EmployeeController extends Controller
         return view('admin.employees.create');
     }
 
+    public function detail ()
+    {
+        return view('admin.employees.detail');
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -134,19 +138,20 @@ class EmployeeController extends Controller
             $employee->image = $path_upload.$filename;
         }
 
-        $employee->username = $request->username;
-        $employee->password = bcrypt($request->password);
-        $employee->role = $request->role;
+//        $employee->username = $request->username;
+//        $employee->password = bcrypt($request->password);
+//        $employee->role = $request->role;
         $employee->sex = $request->sex;
         $employee->birthday = $request->birthday;
         $employee->updated_at = date('Y-m-d H:i:s');
         $employee->save();
 
         if ($employee->save()) {
-            Session::flash('success', 'Thay đổi trạng thái thành công!');
-            return redirect()->route('admin.employee.index',['employee' => $id]);
+            Session::flash('success', 'Cập nhật thành công!');
+            return redirect()->route('employee.detail');
         }else {
-            Session::flash('error', 'Thay đổi trạng thái thất bại!');
+            Session::flash('error', 'Cập nhật thất bại!');
+            return redirect()->route('employee.detail');
         }
     }
     public function change(Request $request, $id)

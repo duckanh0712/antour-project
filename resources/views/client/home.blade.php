@@ -20,7 +20,7 @@
         <!-- Default box -->
         <div class="d-flex justify-content-center">
 
-            <h2>Hệ thống phòng Anhotel</h2>
+            <h2>Tour du lịch mệt vườn Antour</h2>
         </div>
         @if ( Session::has('error') )
             <div class="alert alert-danger alert-dismissible">
@@ -35,7 +35,7 @@
                 {{ Session::get('success') }}
             </div>
         @endif
-        <div class="d-flex justify-content-between m-5">
+        <div class="d-flex justify-content-between m-3">
 
             @if((Auth::check()))
                 <div class="info">
@@ -51,8 +51,8 @@
         <div class="card card-solid">
             <div class="card-body pb-0">
                 <div class="row d-flex align-items-stretch">
-                    @if(!empty($data))
-                        @foreach($data as $key => $room)
+                    @if(!empty($tours))
+                        @foreach($tours as $key => $tour)
                             <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
                                 <div class="card bg-light">
                                     <div class="card-header text-muted border-bottom-0">
@@ -61,23 +61,20 @@
                                     <div class="card-body pt-0">
                                         <div class="row">
                                             <div class="col-7">
-                                                <h2 class="lead"><b>{{ 'Phòng: '.$room->name }}</b></h2>
-                                                <p class="text-muted text-sm"><b>Thông tin: </b> {{ $room->description }} </p>
-                                                <p class="text-muted text-sm"><b>Giá: </b> {{number_format($room->price,0,",",".").'đ '}} </p>
-                                                <ul class="ml-4 mb-0 fa-ul text-muted">
-                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Tình trạng: tốt</li>
-                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Loại phòng: {{ $room->category }}</li>
-                                                </ul>
+                                                <h2 class="lead"><b>{{ 'Tour: '.$tour->name }}</b></h2>
+{{--                                                <p class="text-muted text-sm mb-0"><b>Thông tin: </b> {{ $tour->description }} </p>--}}
+                                                <p class="text-muted text-sm mb-0"><b>Đã có: {{ $tour->members.'/'.$tour->max_members }} người đăng ký </b>  </p>
+                                                <p class="text-muted text-sm mb-0"><b>Thông tin: </b> {{ $tour->address }} </p>
                                             </div>
                                             <div class="col-5 text-center">
-                                                <img src="/backend/dist/img/mau-tam-trang tri-giuong-khach-san-dep-nhat-19.jpg" alt="user-avatar" class="img-circle img-fluid">
+                                                <img src="{{ asset( $tour->image) }}" alt="user-avatar" class="img-fluid">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer">
                                         <div class="text-right">
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-primary" onclick="roomBook({{ $room->id }})">
-                                                <i class=""></i>Đăng ký
+                                            <a href="{{route('client.tour.detail', [ 'id' => $tour->id])}}" class="btn btn-sm btn-primary">
+                                                <i class=""></i>Xem
                                             </a>
                                         </div>
                                     </div>
