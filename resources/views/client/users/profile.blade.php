@@ -24,7 +24,7 @@
 
             <h3 class="profile-username text-center">{{ $data->name }}</h3>
 
-            <p class="text-muted text-center">{{( $data->role == 'employee') ? 'Nhân viên' : 'Quản Lý'}}</p>
+{{--            <p class="text-muted text-center">{{( $data->role == 'employee') ? 'Nhân viên' : 'Quản Lý'}}</p>--}}
 
             <ul class="list-group ">
                 <li class="list-group-item ">
@@ -47,11 +47,11 @@
 
                 </li>
             </ul>
-            <form action="{{route('admin.employee.change',['employee' => $data->id])}}" method="post">
-                @csrf
-                <input type="hidden" name="state" id="state" value="{{$data->state}}">
-                <button class="btn btn-primary" type="submit">Thay đổi trạn thái</button>
-            </form>
+                <form action="{{route('admin.user.change',['user' => $data->id])}}" method="post">
+                    @csrf
+                    <input type="hidden" name="state" id="state" value="{{$data->state}}">
+                    <button class="btn btn-primary" type="submit">Thay đổi trạn thái</button>
+                </form>
 
         </div>
         <!-- /.card-body -->

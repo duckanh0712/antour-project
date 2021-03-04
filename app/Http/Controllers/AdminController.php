@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Employee;
 
 class AdminController extends Controller
 {
@@ -21,64 +23,51 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function login()
     {
-        //
+        return view('auth.login');
+    }
+    public function postLogin(Request $request)
+    {
+//        validate du lieu
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required|min:6'
+        ],[
+            'username.required' => 'Chưa nhập tên đăng nhập',
+
+            'password.required' => 'Chưa nhập mật khẩu',
+            'password.min' => 'mật khẩu tối thiểu 6 ký tự'
+        ]);
+
+        $data = [
+            'username' => $request->input('username'),
+            'password' => $request->input('password')
+        ];
+
+        // check success
+        if (Auth::attempt($data)) {
+
+            if (Auth::user()->state == 0){
+                return redirect()->route('admin.login')->with('erorr' , 'tài khoản đã bị khóa hãy liên lạc với bạn quản trị để giải quyết');
+            }
+            if (Auth::user()->role != 'GUEST') {
+                return redirect()->route('dashboard');
+            }else{
+                return redirect()->route('client.home');
+            }
+
+        }
+        else {
+            return redirect()->back()->with('error', 'Tên đăng nhập  hoặc mật khẩu không chính xác');
+        }
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function logout()
     {
-        //
+        Auth::logout();
+        return redirect()->route('admin.login');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
