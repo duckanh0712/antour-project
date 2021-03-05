@@ -39,7 +39,7 @@
 
             @if((Auth::check()))
                 <div class="info">
-                    <div class="d-flex justify-content-start "> <p class="mr-1">Khách hàng: </p><a href="{{route('client.profile')}}" class="d-block">{{ Auth::user()->name }}</a></div>
+                    <div class="d-flex justify-content-start "> <p class="mr-1">Khách hàng: </p><a href="{{ route('client.profile' )}}" class="d-block">{{ Auth::user()->name }}</a></div>
                 </div>
                 <a class="" href="{{ route('logout') }}" >Đăng xuất</a>
             @else

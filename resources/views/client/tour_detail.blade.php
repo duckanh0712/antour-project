@@ -64,10 +64,10 @@
                             <hr>
                             <p> Chi phí cho 1 thành viên: {{ number_format($tour->price,0,",",".").' đ'}}</p>
                             <div class="mt-4">
-                                <div class="btn btn-primary btn-lg btn-flat">
+                                <button class="btn btn-primary btn-lg btn-flat" onclick="booktour({{$tour->id}})">
 
                                    Đăng ký
-                                </div>
+                                </button>
 
                             </div>
 
@@ -91,7 +91,7 @@
     <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+@include('client.components.book_tour')
 <!-- jQuery -->
 <script src="/backend/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -100,6 +100,7 @@
 <script src="/backend/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/backend/dist/js/demo.js"></script>
+<script src="/js/my_javascript.js"></script>
 </body>
 </html>
 

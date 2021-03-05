@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'ClientController@index')->name('client.home');
+Route::get('/user/profile', 'ClientController@profile')->name('client.profile');
 Route::get('/admin', 'AdminController@index')->name('dashboard')->middleware('CheckAuth');
 Route::get('/login', 'AdminController@login')->name('admin.login');
 Route::post('/admin', 'AdminController@postLogin')->name('admin.postLogin');
@@ -23,11 +24,10 @@ Route::get('/tour/detail/{id}', 'ClientController@detail')->name('client.tour.de
 Route::group(['prefix' => 'admin', 'as' => 'admin.',  'middleware' => 'CheckAuth' ], function () {
     Route::resource('employee', 'EmployeeController');
     Route::post('employee/{id}', 'EmployeeController@change')->name('employee.change');
-
     Route::post('user/{id}', 'UserController@change')->name('user.change');
     Route::resource('/tour', 'TourController');
-
     Route::resource('/user', 'UserController');
+    Route::resource('/book-tour', 'BookTourController');
 
 });
 

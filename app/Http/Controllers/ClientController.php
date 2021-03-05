@@ -19,13 +19,13 @@ class ClientController extends Controller
         return  view('client.home', [ 'tours' => $tours]);
     }
 
+    public function profile ()
+    {
+        return view('client.users.profile');
+    }
     public function detail ($id)
     {
         $tour = Tour::findorFail($id);
-//        $start_date = new Carbon($tour->start_date);
-//        $end_date = new Carbon($tour->end_date);
-//        $tour->start_date = $start_date;
-//        $tour->end_date = $end_date;
         return view('client.tour_detail', [ 'tour' => $tour ]);
     }
     public function registerForm ()

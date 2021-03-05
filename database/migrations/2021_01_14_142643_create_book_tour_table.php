@@ -15,11 +15,11 @@ class CreateBookTourTable extends Migration
     {
         Schema::create('book_tour', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('employee_id');
+            $table->integer('employee_id')->nullable();
             $table->integer('tour_id');
             $table->integer('user_id');
             $table->integer('members');
-            $table->integer('total_price');
+            $table->integer('total_price')->nullable();
             $table->integer('state');
             $table->timestamps();
         });
