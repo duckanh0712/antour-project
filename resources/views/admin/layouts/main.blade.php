@@ -49,7 +49,7 @@
     <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+@include('client.components.confirm')
 <!-- jQuery -->
 <script src="/backend/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -84,6 +84,8 @@
 <script src="/backend/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/backend/dist/js/pages/dashboard.js"></script>
+
+<script src="/js/my_javascript.js"></script>
 @yield('my_javascript')
 </body>
 </html>

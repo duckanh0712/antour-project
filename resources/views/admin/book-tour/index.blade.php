@@ -18,9 +18,9 @@
             @endif
             <h3 class="card-title">Danh sách tour</h3>
 
-            <div class="card-tools">
-                <a href="{{ route('admin.tour.create') }}" class="btn btn-primary fas">Thêm mới</a>
-            </div>
+{{--            <div class="card-tools">--}}
+{{--                <a href="{{ route('admin.tour.create') }}" class="btn btn-primary fas">Thêm mới</a>--}}
+{{--            </div>--}}
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
@@ -28,14 +28,12 @@
                 <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Tên </th>
-                    <th>Ảnh</th>
-                    <th>Giá</th>
-                    <th>Thành viên đăng ký</th>
-{{--                    <th>Mô tả</th>--}}
-
-                    <th>Ngày bắt đầu</th>
-                    <th>Ngày kết thúc</th>
+                    <th>Khách hàng</th>
+                    <th>Tour</th>
+                    <th>Thành viên</th>
+                    <th>Chi phí</th>
+                    <th>Trạng thái</th>
+                    <th>Nhân viên</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,19 +41,19 @@
                     <tr id="{{'tr-'.$item->id}}">
 
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->khachhang->name }}</td>
+                        <td>{{ $item->tour->name }}</td>
+                        <td>{{ $item->members }}</td>
+                        <td>{{ number_format($item->total_price,0,",",".").' đ' }}</td>
+                        <td>{{ $item->state == 0 ? 'chờ duyệt' : 'đã duyệt' }}</td>
+                        <td>{{ !empty($item->employee_id) ? $item->employee->name : ''  }}</td>
                         <td>
-                            <img alt="Avatar" class="table-avatar" src="{{asset($item->image)}}" style="width: 150px">
-                        </td>
-                        <td>{{ number_format($item->price,0,",",".").' đ' }}</td>
-                        <td>{{ $item->members.'/'.$item->max_members }}</td>
-{{--                        <td>{{ $item->description  }}</td>--}}
 
-                        <td>{{ date('d-m-Y', strtotime($item->start_date))  }}</td>
-                        <td>{{ date('d-m-Y', strtotime($item->end_date))  }}</td>
-                        <td>
-                            <a href="{{ route('admin.tour.edit', ['id'=> $item->id]) }}" class="btn btn-primary fas fa-edit"> Sửa</a>
-{{--                            <a href="javascript:void(0)" onclick="destroy( {{$item->id}},'tour')" class="btn btn-danger "> Xóa</a>--}}
+                            @if(!$item->employee_id)
+                                <button class="btn btn-primary" onclick="confirm({{$item->id}})">Duyệt</button>                            @endif
+                            @if( $item->state == 1)
+                                <a href="{{route('book-tour.pay.form',[ 'id' => $item->id ])}}"   class="btn btn-primary"> Thanh toán</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -65,3 +63,4 @@
         <!-- /.card-body -->
     </div>
 @endsection
+

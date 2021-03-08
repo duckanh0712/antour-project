@@ -13,7 +13,7 @@ class BookTour extends Model
     }
     public function tour()
     {
-        return $this->belongsTo('App\Room', 'room_id', 'id');
+        return $this->belongsTo('App\Tour', 'tour_id', 'id');
     }
     public function employee()
     {

@@ -21,10 +21,15 @@ Route::post('/register', 'UserController@store')->name('post.register');
 Route::get('/logout', 'AdminController@logout')->name('logout');
 Route::get('employee/show', 'EmployeeController@detail')->name('employee.detail')->middleware('CheckAuth');
 Route::get('/tour/detail/{id}', 'ClientController@detail')->name('client.tour.detail');
+Route::post('book-tour/approve', 'BookTourController@approve')->name('book-tour.approve')->middleware('CheckAuth');
+Route::get('/book-tour/pay/{id}', 'BookTourController@paymentForm')->name('book-tour.pay.form')->middleware('CheckAuth');
+Route::post('/book-tour/pay/{id}', 'BookTourController@payment')->name('book-tour.pay')->middleware('CheckAuth');
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.',  'middleware' => 'CheckAuth' ], function () {
     Route::resource('employee', 'EmployeeController');
     Route::post('employee/{id}', 'EmployeeController@change')->name('employee.change');
     Route::post('user/{id}', 'UserController@change')->name('user.change');
+
     Route::resource('/tour', 'TourController');
     Route::resource('/user', 'UserController');
     Route::resource('/book-tour', 'BookTourController');
