@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class BookTourController extends Controller
 {
-    public function index ()
+    public function index()
     {
-
+        $book_tour = BookTour::latest()->paginate(20);
+        return view('admin.book-tour.index', [ 'data' => $book_tour]);
     }
+
     public function store (Request  $request)
     {
         $tour = Tour::findorFail($request->tour_id);

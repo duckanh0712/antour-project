@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.tour.index') }}" class="nav-link">
+                    <a href="{{ route('admin.book-tour.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-inbox"></i>
                         <p>
                             Quản lý đặt tour
@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.tour.index') }}" class="nav-link">
+                    <a href="{{ route('admin.book-tour.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-barcode"></i>
                         <p>
                             Thống kê

@@ -19,8 +19,10 @@ Route::post('/admin', 'AdminController@postLogin')->name('admin.postLogin');
 Route::get('/register', 'ClientController@registerForm')->name('register');
 Route::post('/register', 'UserController@store')->name('post.register');
 Route::get('/logout', 'AdminController@logout')->name('logout');
+
 Route::get('employee/show', 'EmployeeController@detail')->name('employee.detail')->middleware('CheckAuth');
-Route::get('/tour/detail/{id}', 'ClientController@detail')->name('client.tour.detail');
+Route::get('/tour/detail/{id}', 'ClientController@detail')->name('client.tour.detail')->middleware('CheckRole');
+Route::post('/user/update', 'ClientController@update')->name('user.update')->middleware('CheckRole');
 Route::group(['prefix' => 'admin', 'as' => 'admin.',  'middleware' => 'CheckAuth' ], function () {
     Route::resource('employee', 'EmployeeController');
     Route::post('employee/{id}', 'EmployeeController@change')->name('employee.change');

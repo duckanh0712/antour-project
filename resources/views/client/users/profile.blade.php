@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Anhotel | {{ Auth::user()->name }}</title>
+    <title>Antour | {{ Auth::user()->name }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -59,7 +59,7 @@
 
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    <img class="profile-user-img img-fluid img-circle" src="/backend/dist/img/user4-128x128.jpg" alt="User profile picture">
+                                    <img class="profile-user-img img-fluid img-circle" src="{{ !empty(Auth::user()->image) ? asset(Auth::user()->image)  :'/backend/dist/img/user4-128x128.jpg' }}" alt="User profile picture">
                                 </div>
                                 <h3 class="profile-username text-center">{{ Auth::user()->name }}</h3>
                             </div>
@@ -120,7 +120,7 @@
                                 <div class="card-body">
                                     <div class="tab-content">
                                         <div class="tab-pane" id="activity">
-                                            <form class="form-horizontal" action="" method="post">
+                                            <form class="form-horizontal" action="{{route('user.update')}}" method="post" enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="form-group row">
                                                     <label for="inputName" class="col-sm-2 col-form-label">Tên</label>
@@ -128,6 +128,28 @@
                                                         <input type="text" class="form-control" id="name" name="name" value="{{ Auth::user()->name }}">
                                                     </div>
                                                 </div>
+                                                <div class="form-group row">
+                                                    <label for="inputName" class="col-sm-2 col-form-label">Ảnh</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="file" class="form-control" id="image" name="image">
+                                                    </div>
+                                                </div>
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label for="name">Ảnh</label>--}}
+{{--                                                    <div class="custom-file">--}}
+{{--                                                        <input type="file" class="custom-file-input" name="image" id="image">--}}
+{{--                                                        <label class="custom-file-label" for="image">Chọn ảnh đại diện</label>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label for="name">Ảnh</label>--}}
+{{--                                                    <img src="{{asset($data->image)}}" alt="" width="10%" class="m-1">--}}
+{{--                                                    <div class="custom-file">--}}
+
+{{--                                                        <input type="file" class="custom-file-input" name="image" id="image">--}}
+{{--                                                        <label class="custom-file-label" for="image">Chọn ảnh đại diện</label>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
                                                 <div class="form-group row">
                                                     <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                                                     <div class="col-sm-10">
@@ -176,35 +198,40 @@
                                                             <thead>
                                                             <tr>
                                                                 <th>STT</th>
-                                                                <th>Phòng</th>
-                                                                <th>Giá phòng</th>
-                                                                <th>Trạng thái</th>
+                                                                <th>Tour</th>
+                                                                <th></th>
+
+                                                                <th>Thành viên</th>
+                                                                <th>Đơn giá</th>
                                                                 <th>thanh toán</th>
-                                                                <th>Loại phòng</th>
+                                                                <th>Trạng thái</th>
                                                                 <th>Ngày bắt đầu</th>
                                                                 <th>Ngày kết thúc</th>
                                                                 <th>Thu ngân</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-{{--                                                            @foreach( $room_books as $key => $item )--}}
-{{--                                                                <tr>--}}
-{{--                                                                    <td>{{ $key + 1 }}</td>--}}
-{{--                                                                    <td>{{ $item->room->name }}</td>--}}
-{{--                                                                    <td>{{ number_format($item->room->price,0,",",".").' đ' }}</td>--}}
-{{--                                                                    @if($item->state == 3)--}}
-{{--                                                                        <td>Đã xong</td>--}}
-{{--                                                                    @elseif ($item->state == 2 )--}}
-{{--                                                                        <td> đã duyệt</td>--}}
-{{--                                                                    @else <td>Chờ duyệt</td>--}}
-{{--                                                                    @endif--}}
-{{--                                                                    <td>{{ (!empty($item->total_price)) ? number_format($item->total_price,0,",",".").' đ' : '0 đ'}}</td>--}}
-{{--                                                                    <td>{{ $item->room->category }}</td>--}}
-{{--                                                                    <td>{{ $item->start_date }}</td>--}}
-{{--                                                                    <td>{{ (!empty($item->end_date)) ? $item->end_date : '' }}</td>--}}
-{{--                                                                    <td>{{ (!empty($item->employee->name)) ? $item->employee->name : '' }}</td>--}}
-{{--                                                                </tr>--}}
-{{--                                                            @endforeach--}}
+                                                            @foreach( $data as $key => $item )
+                                                                <tr>
+                                                                    <td>{{ $key + 1 }}</td>
+                                                                    <td>{{ $item->tour->name }}</td>
+                                                                    <td>
+                                                                        <img alt="Avatar" class="table-avatar" src="{{asset($item->tour->image)}}" style="width: 150px">
+                                                                    </td>
+                                                                    <td>{{ $item->members }}</td>
+                                                                    <td>{{ $item->tour->price }}</td>
+                                                                    <td>{{ number_format($item->total_price,0,",",".").' đ' }}</td>
+                                                                    @if($item->state == 3)
+                                                                        <td>Đã xong</td>
+                                                                    @elseif ($item->state == 2 )
+                                                                        <td> đã duyệt</td>
+                                                                    @else <td>Chờ duyệt</td>
+                                                                    @endif
+                                                                    <td>{{ date('d-m-Y', strtotime($item->tour->start_date))}}</td>
+                                                                    <td>{{ date('d-m-Y', strtotime($item->tour->end_date))}}</td>
+                                                                    <td>{{ (!empty($item->employee->name)) ? $item->employee->name : '' }}</td>
+                                                                </tr>
+                                                            @endforeach
                                                             </tbody>
                                                         </table>
 
