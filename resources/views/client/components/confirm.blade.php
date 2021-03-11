@@ -10,9 +10,9 @@
             <div class="modal-body">
                 <p>Bạn có chắc chắn muốn duyệt</p>
             </div>
-            <form action="" method="post" >
+            <form action="{{route('book-tour.approve') }}" method="post" >
                 @csrf
-                <input type="hidden" id="id_room_book" name="id_room_book">
+                <input type="hidden" id="id_book_tour" name="id_book_tour">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                     <button type="submit" class="btn btn-primary">OK</button>

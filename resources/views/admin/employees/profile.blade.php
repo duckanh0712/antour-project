@@ -23,9 +23,11 @@
             </div>
 
             <h3 class="profile-username text-center">{{ $data->name }}</h3>
-
+            @if( $data->role == 'guest')
+                    <p class="text-muted text-center">Khách hàng</p>
+                @else
             <p class="text-muted text-center">{{( $data->role == 'employee') ? 'Nhân viên' : 'Quản Lý'}}</p>
-
+                @endif
             <ul class="list-group ">
                 <li class="list-group-item ">
                     <b>Ngày Sinh</b> <b class="float-right">{{ $data->birthday }}</b>

@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.book-tour.index') }}" class="nav-link">
+                    <a href="{{ route('book-tour.statistics') }}" class="nav-link">
                         <i class="nav-icon fas fa-barcode"></i>
                         <p>
                             Thống kê

@@ -73,7 +73,7 @@
                                     {{ $item->birthday }}
                                 </td>
                             <td class="project-actions text-right">
-                                <a class="btn btn-success fas fa-eye" href="{{ route('admin.user.show', ['user' => $item->id]) }}">
+                                <a class="btn btn-success fas fa-eye" href="{{ route('admin.employee.show', ['user' => $item->id]) }}">
                                 </a>
                             </td>
                         </tr>

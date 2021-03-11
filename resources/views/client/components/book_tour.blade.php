@@ -16,7 +16,7 @@
                         <input type="number" class="form-control" id="members" name="members" required>
                     </div>
                     <input type="hidden" name="tour_id" id="tour_id">
-                    <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
+                    <input type="hidden" name="user_id" id="user_id" value="{{!empty(Auth::user()->id ? Auth::user()->id : '')}}">
 
             </div>
             <div class="modal-footer">

@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@section('title','Quản lý phòng')
+@section('title','Quản lý tour')
 @section('content')
     <div class="card">
         <div class="card-header">
