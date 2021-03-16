@@ -48,7 +48,7 @@
                 </li>
             </ul>
                 @if( Auth::user()->role == 'manager')
-                    <form action="{{route('admin.user.change',['employee' => $data->id])}}" method="post">
+                    <form action="{{route('admin.user.change',['id' => $data->id])}}" method="post">
                         @csrf
                         <input type="hidden" name="state" id="state" value="{{$data->state}}">
                         <button class="btn btn-primary" type="submit">Thay đổi trạn thái</button>

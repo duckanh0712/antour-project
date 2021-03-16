@@ -1,12 +1,12 @@
 @extends('admin.layouts.main')
-@section('title','Trả phòng');
+@section('title','Thanh toán');
 @section('content')
     <div class="card card-info col-6" >
         <div class="card-header">
             <h3 class="card-title">Thanh toán </h3>
         </div>
         <div class="">
-            <form action="" method="post">
+            <form action="{{route('book-tour.pay',['id' => $data->id])}}" method="post">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
