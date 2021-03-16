@@ -81,7 +81,7 @@
                     <!-- /.col -->
                 </div>
             </form>
-            <a href="" class="text-center">Đã có tài khoản</a>
+            <a href="{{route('admin.login')}}" class="text-center">Đã có tài khoản</a>
         </div>
         <!-- /.form-box -->
     </div><!-- /.card -->

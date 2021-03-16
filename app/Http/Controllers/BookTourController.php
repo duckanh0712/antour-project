@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\BookTour;
 use App\Tour;
 use Illuminate\Http\Request;
@@ -20,11 +20,17 @@ class BookTourController extends Controller
     {
         $tour = Tour::findorFail($request->tour_id);
         $slot = $tour->max_members - $tour->members;
-        if (  $slot <= 0){
+
+        if (  $slot < 1){
+
             Session::flash('error',' Chỉ còn '.$slot.' chỗ chống.');
             return redirect()->route('client.tour.detail', [ 'id' => $request->tour_id ]);
         }
-       $book_tour = new BookTour();
+        if( $request->members > $tour->max_members){
+            Session::flash('error',' Chỉ còn '.$slot.' chỗ chống.');
+            return redirect()->route('client.tour.detail', [ 'id' => $request->tour_id ]);
+        }
+        $book_tour = new BookTour();
         $book_tour->tour_id = $request->tour_id;
         $book_tour->user_id = Auth::user()->id;
         $book_tour->members = (int)$request->members;
@@ -37,6 +43,7 @@ class BookTourController extends Controller
             $book_tour->save();
             $tour->save();
             DB::commit();
+            Session::flash('success',' Đăng ký thành công.');
             return redirect()->route('client.profile');
         }catch (Exception $exception){
             DB::rollBack();
@@ -79,4 +86,16 @@ class BookTourController extends Controller
             return redirect()->route('admin.book-tour.index');
         }
     }
+
+    public function statistics ()
+    {
+
+        $book_tour = BookTour::where('state' , 3 )->latest()->paginate(20);
+        $price = 0;
+        foreach ( $book_tour as $key => $item){
+            $price = $price + $item->total_price;
+        }
+        return view('admin.statistics.index',[ 'data' => $book_tour, 'price' => $price]);
+    }
+
 }

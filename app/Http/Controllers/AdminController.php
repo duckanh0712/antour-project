@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Employee;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -62,6 +65,41 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Tên đăng nhập  hoặc mật khẩu không chính xác');
         }
 
+    }
+
+    public function changePassword (Request $request)
+    {
+
+
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|same:password',
+            'password_confirmation' => 'required|same:password',
+        ],[
+            'current_password.required' => 'Mật khẩu hiện tại không được để chống',
+            'password.required' => 'Mật khẩu mới không được để chống ',
+            'password_confirmation.required' => 'Nhập lại mật khẩu không được để chống '
+        ]);
+        dd(123);
+        $current_password = Auth::User()->password;
+        if(Hash::check($request->current_password, $current_password))
+        {
+            $user_id = Auth::User()->id;
+            $obj_user = User::findorFail($user_id);
+            $obj_user->password = Hash::make($request->password);
+            $obj_user->save();
+
+            if ($obj_user->save()) {
+                Session::flash('success', 'Cập nhật thành công!');
+                return redirect()->route('client.profile');
+            }else {
+
+            }
+        }
+        else
+        {
+            Session::flash('error', 'Mật khẩu hiện tại k đúng!');
+        }
     }
 
     public function logout()

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\BookTour;
 use App\Tour;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ClientController extends Controller
 {
@@ -21,7 +25,9 @@ class ClientController extends Controller
 
     public function profile ()
     {
-        return view('client.users.profile');
+
+        $book_tour = User::findorFail(Auth::user()->id)->book_tour;
+        return view('client.users.profile', [ 'data' => $book_tour]);
     }
     public function detail ($id)
     {
@@ -85,7 +91,38 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findorFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+
+        if ($request->hasFile('image')) { // dòng này Kiểm tra xem có image có được chọn
+            // get file
+            $file = $request->file('image');
+            // đặt tên cho file image
+            $filename = time().'_'.$file->getClientOriginalName(); // $file->getClientOriginalName() == tên ban đầu của image
+            // Định nghĩa đường dẫn sẽ upload lên
+            $path_upload = 'uploads/user/';
+            // Thực hiện upload file
+            $request->file('image')->move($path_upload,$filename); // upload lên thư mục public/uploads/product
+
+            $user->image = $path_upload.$filename;
+        }
+//
+//        $user->username = $request->username;
+//        $user->password = bcrypt($request->password);
+        $user->sex = $request->sex;
+        $user->birthday = $request->birthday;
+        $user->updated_at = date('Y-m-d H:i:s');
+        $user->save();
+
+        if ($user->save()) {
+            Session::flash('success', 'Thay đổi trạng thái thành công!');
+            return redirect()->route('admin.user.show',['user' => $id]);
+        }else {
+            Session::flash('error', 'Thay đổi trạng thái thất bại!');
+        }
+
     }
 
     /**

@@ -174,8 +174,8 @@ class UserController extends Controller
         $user->save();
 
         if ($user->save()) {
-            Session::flash('success', 'Thay đổi trạng thái thành công!');
-            return redirect()->route('admin.user.show',['user' => $id]);
+            Session::flash('success', 'Cập nhật thành công!');
+            return redirect()->route('client.profile');
         }else {
             Session::flash('error', 'Thay đổi trạng thái thất bại!');
         }

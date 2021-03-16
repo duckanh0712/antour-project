@@ -32,6 +32,15 @@
                         </ol>
                     </div>
                 </div>
+                @if($errors->any())
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><i class="icon fa fa-warning"></i> Lỗi!</h4>
+                        @foreach($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
                 @if ( Session::has('error') )
                     <div class="alert alert-danger alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -59,7 +68,7 @@
 
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    <img class="profile-user-img img-fluid img-circle" src="/backend/dist/img/user4-128x128.jpg" alt="User profile picture">
+                                    <img class="profile-user-img img-fluid img-circle" src="{{ Auth::user()->image ? asset(Auth::user()->image) : '/backend/dist/img/user4-128x128.jpg' }}" alt="User profile picture">
                                 </div>
                                 <h3 class="profile-username text-center">{{ Auth::user()->name }}</h3>
                             </div>
@@ -83,7 +92,7 @@
 
                                 <strong>SDT</strong>
 
-                                <p class="text-muted">{{ '0'.Auth::user()->phone }}</p>
+                                <p class="text-muted">{{ Auth::user()->phone }}</p>
 
                                 <hr>
                                 <strong>Email</strong>
@@ -115,12 +124,13 @@
                                     <ul class="nav nav-pills">
                                         <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Lịch sử đặt tour</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Cập nhật thông tin</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#password" data-toggle="tab">Đổi mật khẩu</a></li>
                                     </ul>
                                 </div><!-- /.card-header -->
                                 <div class="card-body">
                                     <div class="tab-content">
                                         <div class="tab-pane" id="activity">
-                                            <form class="form-horizontal" action="" method="post">
+                                            <form class="form-horizontal" action="{{route('client.profile.update',[ 'id' => Auth::user()->id])}}" method="post" enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="form-group row">
                                                     <label for="inputName" class="col-sm-2 col-form-label">Tên</label>
@@ -137,7 +147,13 @@
                                                 <div class="form-group row">
                                                     <label for="inputName" class="col-sm-2 col-form-label">SĐT</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="phone" name="phone" value="{{ '0'.Auth::user()->phone }}">
+                                                        <input type="text" class="form-control" id="phone" name="phone" value="{{Auth::user()->phone }}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="inputName" class="col-sm-2 col-form-label">Ảnh</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="file" class="form-control" id="image" name="image" value="{{Auth::user()->image }}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -176,41 +192,70 @@
                                                             <thead>
                                                             <tr>
                                                                 <th>STT</th>
-                                                                <th>Phòng</th>
-                                                                <th>Giá phòng</th>
+                                                                <th>Tour</th>
+                                                                <th>thành viên</th>
                                                                 <th>Trạng thái</th>
+                                                                <th>Đơn giá</th>
                                                                 <th>thanh toán</th>
-                                                                <th>Loại phòng</th>
                                                                 <th>Ngày bắt đầu</th>
                                                                 <th>Ngày kết thúc</th>
                                                                 <th>Thu ngân</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-{{--                                                            @foreach( $room_books as $key => $item )--}}
-{{--                                                                <tr>--}}
-{{--                                                                    <td>{{ $key + 1 }}</td>--}}
-{{--                                                                    <td>{{ $item->room->name }}</td>--}}
-{{--                                                                    <td>{{ number_format($item->room->price,0,",",".").' đ' }}</td>--}}
-{{--                                                                    @if($item->state == 3)--}}
-{{--                                                                        <td>Đã xong</td>--}}
-{{--                                                                    @elseif ($item->state == 2 )--}}
-{{--                                                                        <td> đã duyệt</td>--}}
-{{--                                                                    @else <td>Chờ duyệt</td>--}}
-{{--                                                                    @endif--}}
-{{--                                                                    <td>{{ (!empty($item->total_price)) ? number_format($item->total_price,0,",",".").' đ' : '0 đ'}}</td>--}}
-{{--                                                                    <td>{{ $item->room->category }}</td>--}}
-{{--                                                                    <td>{{ $item->start_date }}</td>--}}
-{{--                                                                    <td>{{ (!empty($item->end_date)) ? $item->end_date : '' }}</td>--}}
-{{--                                                                    <td>{{ (!empty($item->employee->name)) ? $item->employee->name : '' }}</td>--}}
-{{--                                                                </tr>--}}
-{{--                                                            @endforeach--}}
+                                                            @foreach( $data as $key => $item )
+                                                                <tr>
+                                                                    <td>{{ $key + 1 }}</td>
+                                                                    <td>{{ $item->tour->name }}</td>
+                                                                    <td>{{ $item->members }}</td>
+                                                                    @if($item->state == 3)
+                                                                        <td>Đã xong</td>
+                                                                    @elseif ($item->state == 2 )
+                                                                        <td> đã duyệt</td>
+                                                                    @else <td>Chờ duyệt</td>
+                                                                    @endif
+                                                                    <td>{{ number_format($item->tour->price,0,",",".").' đ' }}</td>
+                                                                    <td>{{ (!empty($item->total_price)) ? number_format($item->total_price,0,",",".").' đ' : '0 đ'}}</td>
+                                                                    <td>{{ $item->tour->start_date }}</td>
+                                                                    <td>{{ $item->tour->end_date  }}</td>
+                                                                    <td>{{ (!empty($item->employee->name)) ? $item->employee->name : '' }}</td>
+                                                                </tr>
+                                                            @endforeach
                                                             </tbody>
                                                         </table>
 
                                                     </div>
                                                     <!-- /.card-body -->
                                                 </div>
+                                        </div>
+                                        <div class="tab-pane" id="password">
+                                            <form class="form-horizontal" action="{{route('change.password')}}" method="post" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="form-group row">
+                                                    <label for="inputName" class="col-sm-2 col-form-label">Mật khẩu hiện tại</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="password" class="form-control" id="current_password" name="current_password" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="inputName" class="col-sm-2 col-form-label">Mật khẩu mới</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="password" class="form-control" id="password" name="password" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="inputName" class="col-sm-2 col-form-label">Nhập lại mật khẩu</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="offset-sm-2 col-sm-10">
+                                                        <button type="submit" class="btn btn-primary">Lưu</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
                                         </div>
                                         <!-- /.tab-pane -->
                                     </div>
