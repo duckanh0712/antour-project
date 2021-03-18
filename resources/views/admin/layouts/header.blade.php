@@ -34,11 +34,17 @@
                 <i class="far fa-user"></i>
                 <span class="badge badge-warning navbar-badge"></span>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="width: 10%">
 
-                <div class="dropdown-divider"></div>
+
+                <a href="{{route('employee.detail')}}" class="dropdown-item">
+                    Trang cá nhân
+                </a>
+                <a href="{{route('admin.change.password.form')}}" class="dropdown-item">
+                     Đổi mật khẩu
+                </a>
                 <a href="{{route('logout')}}" class="dropdown-item">
-                     Đăng xuất
+                    Đăng xuất
                 </a>
             </div>
         </li>

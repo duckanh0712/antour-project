@@ -11,10 +11,15 @@
 |
 */
 
+use AdvanceSearch\AdvanceSearchProvider\Search;
+
+Route::get('/admin', 'AdminController@index')->name('dashboard')->middleware('CheckAuth');
 Route::get('/', 'ClientController@index')->name('client.home');
 Route::get('/user/profile', 'ClientController@profile')->name('client.profile');
 Route::post('/user/update/{id}', 'UserController@update')->name('client.profile.update')->middleware('CheckLogin');
 Route::post('/user/password', 'AdminController@changePassword')->name('change.password')->middleware('CheckLogin');
+Route::get('/employee/password', 'EmployeeController@changePasswordForm')->name('admin.change.password.form')->middleware('CheckAuth');
+Route::post('/employee/password', 'EmployeeController@changePassword')->name('admin.change.password')->middleware('CheckAuth');
 Route::get('/admin', 'AdminController@index')->name('dashboard')->middleware('CheckAuth');
 Route::get('/login', 'AdminController@login')->name('admin.login');
 Route::post('/admin', 'AdminController@postLogin')->name('admin.postLogin');
@@ -39,4 +44,4 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.',  'middleware' => 'CheckAuth
 });
 
 
-
+Route::get('/abc', 'TourController@search');

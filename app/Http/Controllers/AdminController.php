@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\BookTour;
+use App\Tour;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +20,19 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $book_tour = BookTour::where('state', '<', 3)->count();
+        $numTour = Tour::count();
+        $numEmployee = Employee::where('role','employee')->count();
+        $numUser = User::where('role','guest')->count(); //
+
+        $data = [
+            'book_tour' => $book_tour,
+            'numTour' => $numTour,
+            'numEmployee' => $numEmployee,
+            'numUser' => $numUser
+        ];
+
+        return view('admin.dashboard',  $data);
     }
 
     /**

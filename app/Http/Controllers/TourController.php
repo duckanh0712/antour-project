@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use AdvanceSearch\AdvanceSearchProvider\Search;
 use App\Tour;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,19 @@ class TourController extends Controller
         $tours = Tour::latest()->paginate(20);
         return view('admin.tours.index', [ 'data' => $tours]);
     }
+    public  function  search ()
+    {
+       $data =  Search::search(
+            "Tour" ,
+            'name' ,
+            "chu"  ,
+            ['id' , 'name', 'image','address','description','members','max_members','start_date','end_date'],
+            'id',
+            false
+        )->get();
+       dd($data);
+    }
+
 
     /**
      * Show the form for creating a new resource.

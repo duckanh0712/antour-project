@@ -32,7 +32,6 @@
                     <td>{{ $item->khachhang->name }}</td>
                     <td>{{ $item->tour->start_date }}</td>
                     <td>{{ $item->tour->end_date }}</td>
-
                 </tr>
             @endforeach
             </tbody>
@@ -40,13 +39,10 @@
         <div class="card-body">
             <hr>
             <strong>Tổng thu:</strong>
-
             <p class="text-muted">
                 {{ number_format($price,0,",",".").' đ'  }}
             </p>
-
             <hr>
-
         </div>
     </div>
 @endsection

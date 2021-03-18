@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 
@@ -181,6 +184,44 @@ class EmployeeController extends Controller
 
     }
 
+    public function changePasswordForm ()
+    {
+        return view('admin.employees.password');
+    }
+
+    public function changePassword (Request $request)
+    {
+
+
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|same:password',
+            'password_confirmation' => 'required|same:password',
+        ],[
+            'current_password.required' => 'Mật khẩu hiện tại không được để chống',
+            'password.required' => 'Mật khẩu mới không được để chống ',
+            'password_confirmation.required' => 'Nhập lại mật khẩu không được để chống '
+        ]);
+        $current_password = Auth::user()->password;
+        if(Hash::check($request->current_password, $current_password))
+        {
+            $user_id = Auth::User()->id;
+            $obj_user = Employee::findorFail($user_id);
+            $obj_user->password = Hash::make($request->password);
+            $obj_user->save();
+
+            if ($obj_user->save()) {
+                Session::flash('success', 'Cập nhật thành công!');
+                return redirect()->route('admin.change.password.form');
+            }
+        }
+        else
+        {
+            Session::flash('error', 'Mật khẩu hiện tại k đúng!');
+            return redirect()->route('admin.change.password.form');
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -191,4 +232,5 @@ class EmployeeController extends Controller
     {
         //
     }
+
 }
