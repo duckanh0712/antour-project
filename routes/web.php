@@ -32,7 +32,8 @@ Route::post('book-tour/approve', 'BookTourController@approve')->name('book-tour.
 Route::get('/book-tour/pay/{id}', 'BookTourController@paymentForm')->name('book-tour.pay.form')->middleware('CheckAuth');
 Route::post('/book-tour/pay/{id}', 'BookTourController@payment')->name('book-tour.pay')->middleware('CheckAuth');
 Route::get('/book-tour/statistics', 'BookTourController@statistics')->name('book-tour.statistics')->middleware('CheckLogin');
-
+Route::post('/book-tour/statistics/filter', 'BookTourController@filterDate')->name('book-tour.statistics.filter')->middleware('CheckLogin');
+Route::get('/search', 'SearchController@searchTours')->name('search.tours')->middleware('CheckLogin');
 Route::group(['prefix' => 'admin', 'as' => 'admin.',  'middleware' => 'CheckAuth' ], function () {
     Route::resource('employee', 'EmployeeController');
     Route::post('employee/{id}', 'EmployeeController@change')->name('employee.change');
@@ -45,3 +46,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.',  'middleware' => 'CheckAuth
 
 
 Route::get('/abc', 'TourController@search');
+Route::get('testngaygio/', function () {
+    $a = new DateTime('2021/03/20');
+    $now = new DateTime('tomorrow');
+    dd($now);
+    if ($a > $now){
+        dd(false);
+    }else{
+        dd(true);
+    }
+});

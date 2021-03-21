@@ -5,13 +5,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Thêm nhân viên</h1>
+                    <h1>Sửa tour</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Quản Lý Antour</a></li>
-                        <li class="breadcrumb-item"><a href="#">Quản lý nhân viên</a></li>
-                        <li class="breadcrumb-item active">Thêm nhân viên</li>
+                        <li class="breadcrumb-item"><a href="#">Quản lý tour</a></li>
+                        <li class="breadcrumb-item active">Sửa tour</li>
                     </ol>
                 </div>
             </div>

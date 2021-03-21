@@ -26,10 +26,15 @@ class BookTourController extends Controller
             Session::flash('error',' Chỉ còn '.$slot.' chỗ chống.');
             return redirect()->route('client.tour.detail', [ 'id' => $request->tour_id ]);
         }
-        if( $request->members > $tour->max_members){
+        else if( $request->members > $tour->max_members){
             Session::flash('error',' Chỉ còn '.$slot.' chỗ chống.');
             return redirect()->route('client.tour.detail', [ 'id' => $request->tour_id ]);
         }
+         else if( $request->members >$slot){
+            Session::flash('error',' Chỉ còn '.$slot.' chỗ chống.');
+            return redirect()->route('client.tour.detail', [ 'id' => $request->tour_id ]);
+        }
+//         dd($request->members);
         $book_tour = new BookTour();
         $book_tour->tour_id = $request->tour_id;
         $book_tour->user_id = Auth::user()->id;
@@ -97,5 +102,17 @@ class BookTourController extends Controller
         }
         return view('admin.statistics.index',[ 'data' => $book_tour, 'price' => $price]);
     }
+    public function filterDate(Request $request)
+    {
 
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $book_tour = BookTour::where('state' , 3 )->whereBetween('updated_at', [$start_date, $end_date])->latest()->paginate(20);
+        $price = 0;
+        foreach ( $book_tour as $key => $item){
+            $price = $price + $item->total_price;
+        }
+//        dd($book_tour);
+        return view('admin.statistics.index',[ 'data' => $book_tour, 'price' => $price,'start_date' => $start_date, 'end_date' => $end_date]);
+    }
 }

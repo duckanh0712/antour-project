@@ -3,6 +3,15 @@
 @section('content')
     <div class="card">
         <div class="card-header">
+            @if($errors->any())
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-warning"></i> Lỗi!</h4>
+                    @foreach($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
             @if ( Session::has('error') )
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -16,11 +25,22 @@
                     {{ Session::get('success') }}
                 </div>
             @endif
-            <h3 class="card-title">Danh sách tour</h3>
-
-            <div class="card-tools">
-                <a href="{{ route('admin.tour.create') }}" class="btn btn-primary fas">Thêm mới</a>
-            </div>
+                <div class="d-flex justify-content-between ">
+                    <h3 class="card-title">Danh sách tour</h3>
+{{--                    <form class="form-inline" action="{{route('search.tours')}}" method="get">--}}
+{{--                        <div class="input-group input-group-sm">--}}
+{{--                            <input class="form-control" type="search" name="p" id="p" placeholder="Tìm kiếm" aria-label="Search">--}}
+{{--                            <div class="input-group-append">--}}
+{{--                                <button class="btn btn-navbar" type="submit">--}}
+{{--                                    <i class="fas fa-search"></i>--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </form>--}}
+                    <div class="card-tools">
+                        <a href="{{ route('admin.tour.create') }}" class="btn btn-primary fas">Thêm mới</a>
+                    </div>
+                </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">

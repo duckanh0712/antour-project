@@ -17,7 +17,15 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
+    @if($errors->any())
+        <div class="alert alert-danger alert-dismissible col-6">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-warning"></i> Lỗi!</h4>
+            @foreach($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
     <!-- Main content -->
     <form class="content" action="{{route('admin.tour.store')}}" method="post" enctype="multipart/form-data" >
         @csrf

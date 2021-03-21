@@ -51,6 +51,14 @@ class TourController extends Controller
     public function store(Request $request)
     {
 //        dd($request->all());
+//        $request->validate([
+//            'start_date' => 'after:tomorrow',
+//            'end_date' => 'after:start_date'
+//        ],[
+//            'start_date.after' => 'Ngày bắt đầu không đúng.',
+//            'end_date.after' => 'Ngày kết thúc không đúng.'
+//        ]);
+
 
         $tour = new Tour();
         $tour->name = $request->name;
